@@ -3,7 +3,7 @@ import { Outputs } from "./_components/outputs";
 
 export default function Home() {
   return (
-    <div className="p-6">
+    <div className="px-6 pt-6">
       <h1 className="text-1xl font-bold mb-2">Home</h1>
       <Tabs defaultValue="saidas">
         <TabsList>
