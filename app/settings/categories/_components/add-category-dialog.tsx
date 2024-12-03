@@ -16,6 +16,7 @@ import { Switch } from "@/components/ui/switch";
 import { Circle } from "lucide-react";
 import { useState } from "react";
 import { Check } from "lucide-react";
+import { ColorPicker } from "@/components/color-picker";
 
 export function AddCategoryDialog() {
   const [isSubCategory, setIsSubCategory] = useState(false);
@@ -101,10 +102,52 @@ export function SelectColorToCategory({
           </button>
         ))}
       </div>
-      <button className="mt-3 text-gray-600 text-sm w-max relative group">
-        Mostrar cores
-        <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gray-400 transition-all group-hover:w-full"></span>
-      </button>
+      <ColorPickerDialog />
     </div>
+  );
+}
+
+export function ColorPickerDialog() {
+  const [selectedColor, setSelectedColor] = useState("#aabbcc");
+  const defaultColor = "#aabbcc";
+
+  const handleColorChange = (color: string) => {
+    setSelectedColor(color);
+  };
+
+  const handleReset = () => {
+    setSelectedColor(defaultColor);
+  };
+
+  const handleSave = () => {
+    console.log("Cor selecionada:", selectedColor);
+  };
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <button className="mt-3 text-gray-600 text-sm w-max relative group">
+          Mostrar cores
+          <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gray-400 transition-all group-hover:w-full"></span>
+        </button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <h2 className="text-lg font-bold">Escolha uma cor</h2>
+        <p className="text-sm text-gray-600">
+          Selecione uma cor abaixo para identificar sua categoria.
+        </p>
+        <div className="flex flex-col items-center gap-4">
+          <ColorPicker onChange={handleColorChange} />
+        </div>
+        <DialogFooter className="flex justify-between">
+          <Button variant="outline" onClick={handleReset}>
+            Resetar
+          </Button>
+          <Button type="button" onClick={handleSave}>
+            Salvar
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
