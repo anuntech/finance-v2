@@ -143,6 +143,7 @@ export const columns: ColumnDef<any>[] = [
           <Button variant="ghost" size="icon">
             <ArrowUp className="size-5" />
           </Button>
+          <CategoryActions />
         </div>
       );
     },
@@ -258,7 +259,7 @@ export function DataTable() {
                           {sub.name}
                         </TableCell>
 
-                        <div className="mt-[8px] right-4 absolute text-left text-sm text-muted-foreground">
+                        <div className="mt-[16px] right-2 absolute text-left text-sm">
                           <CategoryActions />
                         </div>
                       </TableRow>
