@@ -48,7 +48,7 @@ export function AddCategoryDialog() {
             />
             <Label htmlFor="is-sub-category">É uma subcategoria</Label>
           </div>
-          <SelectColorToCategory />
+          {!isSubCategory && <SelectColorToCategory />}
         </div>
 
         <DialogFooter>
@@ -90,7 +90,7 @@ export function SelectColorToCategory({
       </div>
       <div className="flex gap-2">
         {colors.map((color) => (
-          <div
+          <button
             key={color.hex}
             onClick={() => handleColorClick(color.hex)}
             className={`w-6 h-6 rounded-full cursor-pointer ${color.name} flex items-center justify-center`}
@@ -98,9 +98,13 @@ export function SelectColorToCategory({
             {selectedColor === color.hex && (
               <Check className="text-white w-4 h-4" />
             )}
-          </div>
+          </button>
         ))}
       </div>
+      <button className="mt-3 text-gray-600 text-sm w-max relative group">
+        Mostrar cores
+        <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gray-400 transition-all group-hover:w-full"></span>
+      </button>
     </div>
   );
 }
