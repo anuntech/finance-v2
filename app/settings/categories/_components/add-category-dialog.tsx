@@ -17,12 +17,27 @@ import { Circle } from "lucide-react";
 import { useState } from "react";
 import { Check } from "lucide-react";
 import { ColorPicker } from "@/components/color-picker";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function AddCategoryDialog() {
   const [isSubCategory, setIsSubCategory] = useState(false);
 
+  const onOpenChange = (open: boolean) => {
+    if (!open) {
+      setIsSubCategory(false);
+    }
+  };
+
   return (
-    <Dialog>
+    <Dialog onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         <Button className="text-xs ml-auto">
           <Circle /> Adicionar
@@ -43,7 +58,7 @@ export function AddCategoryDialog() {
               Nome da {isSubCategory ? "subcategoria" : "categoria"}
               <span className="text-red-500">*</span>
             </Label>
-            <Input id="name" defaultValue="Pedro Duarte" className="w-80" />
+            <Input id="name" placeholder="Nome da categoria" className="w-80" />
           </div>
           <div className="flex items-center space-x-2">
             <Switch
@@ -53,6 +68,7 @@ export function AddCategoryDialog() {
             <Label htmlFor="is-sub-category">É uma subcategoria</Label>
           </div>
           {!isSubCategory && <SelectColorToCategory />}
+          {isSubCategory && <SelectSubCategory />}
         </div>
 
         <DialogFooter>
@@ -152,5 +168,40 @@ export function ColorPickerDialog() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
+  );
+}
+
+export function SelectSubCategory() {
+  return (
+    <div>
+      <Label htmlFor="name">
+        Categoria principal
+        <span className="text-red-500">*</span>
+      </Label>
+      <SelectDemo />
+    </div>
+  );
+}
+
+export function SelectDemo() {
+  return (
+    <Select>
+      <SelectTrigger>
+        <div className="flex gap-2 items-center">
+          <Circle size={25} />
+          <SelectValue placeholder="Select a fruit" />
+        </div>
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Fruits</SelectLabel>
+          <SelectItem value="apple">Apple</SelectItem>
+          <SelectItem value="banana">Banana</SelectItem>
+          <SelectItem value="blueberry">Blueberry</SelectItem>
+          <SelectItem value="grapes">Grapes</SelectItem>
+          <SelectItem value="pineapple">Pineapple</SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
 }
