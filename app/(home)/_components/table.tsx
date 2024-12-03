@@ -14,6 +14,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import {
+  ArrowRight,
   ArrowUp,
   ArrowUpDown,
   ChevronDown,
@@ -43,50 +44,51 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 
 const data = [
   {
     id: "m5gr84i9",
-    name: "Anuntech test",
+    name: "Anuntech",
     subCategories: [
       {
         id: "m5gr8421",
-        name: "Anuntech test",
+        name: "Anuntech",
       },
       {
         id: "m5gr8426",
-        name: "Anuntech test sub",
+        name: "Anuntech sub",
       },
     ],
   },
   {
     id: "3u1reuv4",
-    name: "Anuntech test",
+    name: "Anuntech",
     subCategories: [
       {
         id: "m5gr8421",
-        name: "Anuntech test",
+        name: "Anuntech",
       },
     ],
   },
   {
     id: "derv1ws0",
-    name: "Anuntech test",
+    name: "Anuntech",
     subCategories: [
       {
         id: "m5gr8421",
-        name: "Anuntech test",
+        name: "Anuntech",
       },
     ],
   },
   {
     id: "5kma53ae",
-    name: "Anuntech test",
+    name: "Anuntech",
     subCategories: [],
   },
   {
     id: "bhqecj4p",
-    name: "Anuntech test",
+    name: "Anuntech",
     subCategories: [],
   },
 ];
@@ -180,17 +182,17 @@ export function DataTable() {
           </Button>
         </div>
         <div className="rounded-md border">
-          <Table>
+          <Table className="table-fixed">
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
                       <TableHead
+                        className={cn(
+                          header.column.id === "select" && "w-[40px]"
+                        )}
                         key={header.id}
-                        className={
-                          header.column.id === "select" ? "w-[40px]" : ""
-                        }
                       >
                         {header.isPlaceholder
                           ? null
@@ -207,24 +209,48 @@ export function DataTable() {
             <TableBody>
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell
-                        key={cell.id}
-                        className={`text-left ${
-                          cell.column.id === "select" ? "w-[40px]" : ""
-                        }`}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
+                  <React.Fragment key={row.id}>
+                    <TableRow data-state={row.getIsSelected() && "selected"}>
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+
+                    {row.original.subCategories.map((sub: any) => (
+                      <TableRow key={sub.id}>
+                        <TableCell className="text-left text-sm text-muted-foreground w-[40px]">
+                          <ArrowRight className="size-5" />
+                        </TableCell>
+
+                        <TableCell
+                          style={{ width: "40px", padding: 0 }}
+                          className={"w-[40px] p-0 ml-4"}
+                        >
+                          <Checkbox
+                            checked={row.getIsSelected()}
+                            onCheckedChange={(value) =>
+                              row.toggleSelected(!!value)
+                            }
+                            aria-label="Select row"
+                            className="ml-3"
+                          />
+                        </TableCell>
+
+                        <TableCell className="ml-[-40px] absolute left-32 text-left text-sm text-muted-foreground">
+                          {sub.name}
+                        </TableCell>
+
+                        <TableCell className="ml-[-40px] right-2 absolute text-left text-sm text-muted-foreground">
+                          ...
+                        </TableCell>
+                      </TableRow>
                     ))}
-                  </TableRow>
+                  </React.Fragment>
                 ))
               ) : (
                 <TableRow>
@@ -240,7 +266,7 @@ export function DataTable() {
           </Table>
         </div>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4 mt-auto">
+      <div className="flex items-center justify-end space-x-2 py-4 ">
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
