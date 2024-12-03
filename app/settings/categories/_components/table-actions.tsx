@@ -12,7 +12,7 @@ export function CategoryActions() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex font-bold text-xl text-center items-center justify-center">
-        <MoreHorizontal className="mr-2 size-4" />
+        <MoreHorizontal className="size-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>
