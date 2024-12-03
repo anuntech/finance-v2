@@ -30,7 +30,9 @@ export function AddCategoryDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Adicionar categoria</DialogTitle>
+          <DialogTitle>
+            Adicionar {isSubCategory ? "subcategoria" : "categoria"}
+          </DialogTitle>
           <DialogDescription>
             Make changes to your profile here. Click save when you're done.
           </DialogDescription>
@@ -38,7 +40,8 @@ export function AddCategoryDialog() {
         <div className="flex flex-col gap-4">
           <div>
             <Label htmlFor="name">
-              Nome da categoria<span className="text-red-500">*</span>
+              Nome da {isSubCategory ? "subcategoria" : "categoria"}
+              <span className="text-red-500">*</span>
             </Label>
             <Input id="name" defaultValue="Pedro Duarte" className="w-80" />
           </div>
