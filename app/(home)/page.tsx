@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Outputs } from "./_components/outputs";
+import { DataTable } from "./_components/table";
 
 export default function Home() {
   return (
@@ -18,7 +18,7 @@ export default function Home() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="saidas">
-          <Outputs />
+          <DataTable />
         </TabsContent>
         <TabsContent value="entradas">Change your password here.</TabsContent>
       </Tabs>

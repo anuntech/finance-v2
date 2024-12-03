@@ -14,6 +14,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import {
+  ArrowUp,
   ArrowUpDown,
   ChevronDown,
   Circle,
@@ -46,33 +47,47 @@ import {
 const data = [
   {
     id: "m5gr84i9",
-    name: "willzin do gera",
-    status: "success",
-    email: "ken99@yahoo.com",
+    name: "Anuntech test",
+    subCategories: [
+      {
+        id: "m5gr8421",
+        name: "Anuntech test",
+      },
+      {
+        id: "m5gr8426",
+        name: "Anuntech test sub",
+      },
+    ],
   },
   {
     id: "3u1reuv4",
-    name: "willzin do gera",
-    status: "success",
-    email: "Abe45@gmail.com",
+    name: "Anuntech test",
+    subCategories: [
+      {
+        id: "m5gr8421",
+        name: "Anuntech test",
+      },
+    ],
   },
   {
     id: "derv1ws0",
-    name: "willzin do gera",
-    status: "processing",
-    email: "Monserrat44@gmail.com",
+    name: "Anuntech test",
+    subCategories: [
+      {
+        id: "m5gr8421",
+        name: "Anuntech test",
+      },
+    ],
   },
   {
     id: "5kma53ae",
-    name: "willzin do gera",
-    status: "success",
-    email: "Silas22@gmail.com",
+    name: "Anuntech test",
+    subCategories: [],
   },
   {
     id: "bhqecj4p",
-    name: "willzin do gera",
-    status: "failed",
-    email: "carmella@hotmail.com",
+    name: "Anuntech test",
+    subCategories: [],
   },
 ];
 
@@ -99,7 +114,7 @@ export const columns: ColumnDef<any>[] = [
   },
   {
     accessorKey: "name",
-    header: "Nome",
+    header: "Categoria",
     cell: ({ row }) => <div className="text-left">{row.getValue("name")}</div>,
   },
   {
@@ -108,15 +123,19 @@ export const columns: ColumnDef<any>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex justify-end items-center font-medium gap-2">
-          <CornerDownLeft />
-          <CircleDashed className="size-6" />
+          <Button variant="ghost" size="icon">
+            <Circle className="size-5" color="blue" />
+          </Button>
+          <Button variant="ghost" size="icon">
+            <ArrowUp className="size-5" />
+          </Button>
         </div>
       );
     },
   },
 ];
 
-export function DataTableDemo() {
+export function DataTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
