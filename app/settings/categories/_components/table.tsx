@@ -45,11 +45,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import { CategoryActions } from "./table-actions";
 
 const data = [
   {
     id: "m5gr84i9",
     name: "Anuntech",
+    color: "#000",
+    type: "output",
     subCategories: [
       {
         id: "m5gr8421",
@@ -64,6 +67,8 @@ const data = [
   {
     id: "3u1reuv4",
     name: "Anuntech",
+    color: "#000",
+    type: "output",
     subCategories: [
       {
         id: "m5gr8421",
@@ -74,6 +79,8 @@ const data = [
   {
     id: "derv1ws0",
     name: "Anuntech",
+    color: "#000",
+    type: "output",
     subCategories: [
       {
         id: "m5gr8421",
@@ -84,11 +91,15 @@ const data = [
   {
     id: "5kma53ae",
     name: "Anuntech",
+    color: "#000",
+    type: "output",
     subCategories: [],
   },
   {
     id: "bhqecj4p",
     name: "Anuntech",
+    color: "#000",
+    type: "output",
     subCategories: [],
   },
 ];
@@ -166,7 +177,7 @@ export function DataTable() {
   });
 
   return (
-    <div className="h-[89vh] flex flex-col">
+    <div>
       <div className="w-full">
         <div className="flex items-center py-4">
           <Input
@@ -222,7 +233,7 @@ export function DataTable() {
                     </TableRow>
 
                     {row.original.subCategories.map((sub: any) => (
-                      <TableRow key={sub.id}>
+                      <TableRow key={sub.id} className="h-[54px]">
                         <TableCell className="text-left text-sm text-muted-foreground w-[40px]">
                           <ArrowRight className="size-5" />
                         </TableCell>
@@ -241,13 +252,16 @@ export function DataTable() {
                           />
                         </TableCell>
 
-                        <TableCell className="ml-[-40px] absolute left-32 text-left text-sm text-muted-foreground">
+                        <TableCell
+                          colSpan={columns.length - 8}
+                          className="w-[400px] absolute left-[5.3rem] mt-[8px] text-left text-sm text-muted-foreground"
+                        >
                           {sub.name}
                         </TableCell>
 
-                        <TableCell className="ml-[-40px] right-2 absolute text-left text-sm text-muted-foreground">
-                          ...
-                        </TableCell>
+                        <div className="mt-[8px] right-4 absolute text-left text-sm text-muted-foreground">
+                          <CategoryActions />
+                        </div>
                       </TableRow>
                     ))}
                   </React.Fragment>
