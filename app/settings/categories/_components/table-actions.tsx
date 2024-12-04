@@ -4,23 +4,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { DeleteCategory } from "./delete-category";
 import { Button } from "@/components/ui/button";
 
 export function CategoryActions() {
@@ -30,7 +19,9 @@ export function CategoryActions() {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger className="flex font-bold text-xl text-center items-center justify-center">
-          <MoreHorizontal className="size-4" />
+          <Button variant="ghost" size="icon">
+            <MoreHorizontal />
+          </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem>
@@ -44,6 +35,7 @@ export function CategoryActions() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <DeleteCategory open={open} setOpen={setOpen} />
     </>
   );
 }
