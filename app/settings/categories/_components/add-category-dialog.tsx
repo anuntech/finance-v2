@@ -96,7 +96,7 @@ export function SelectColorToCategory({
     { hex: "#880E4F", name: "bg-[#880E4F]" },
   ];
 
-  const [selectedColor, setSelectedColor] = useState<string>("#880E4F");
+  const [selectedColor, setSelectedColor] = useState<string>(colors[0].hex);
 
   const handleColorClick = (hex: string) => {
     setSelectedColor(hex);
@@ -202,12 +202,12 @@ export function SelectDemo() {
     <Select>
       <SelectTrigger className="w-80 mt-2">
         <div className="flex gap-2 items-center">
-          <SelectValue className="w-80" placeholder="Select a fruit" />
+          <SelectValue className="w-80" placeholder="Selecione uma categoria" />
         </div>
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Fruits</SelectLabel>
+          <SelectLabel>Categorias</SelectLabel>
           <SelectItem className="flex" value="apple">
             <div className="flex items-center gap-2">
               <Circle size={25} />
