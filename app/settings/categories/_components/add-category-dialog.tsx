@@ -96,11 +96,15 @@ export function SelectColorToCategory({
     { hex: "#880E4F", name: "bg-[#880E4F]" },
   ];
 
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string>("#880E4F");
 
   const handleColorClick = (hex: string) => {
     setSelectedColor(hex);
     if (onChange) onChange(hex);
+  };
+
+  const handleHexColorPicker = (hex: string) => {
+    setSelectedColor(hex);
   };
 
   return (
@@ -108,6 +112,13 @@ export function SelectColorToCategory({
       <div className="text-sm text-muted-foreground">
         Cor para identificação em relatórios
       </div>
+      <div
+        className="w-16 h-16 rounded-full border-4 border-gray-300"
+        style={{
+          backgroundColor: selectedColor,
+          boxShadow: `0 0 10px 2px ${selectedColor}`,
+        }}
+      ></div>
       <div className="flex gap-2">
         {colors.map((color) => (
           <button
@@ -121,32 +132,35 @@ export function SelectColorToCategory({
           </button>
         ))}
       </div>
-      <ColorPickerDialog />
+      <ColorPickerDialog handleColorChange={handleHexColorPicker} />
     </div>
   );
 }
 
-export function ColorPickerDialog() {
+export function ColorPickerDialog({
+  handleColorChange,
+}: {
+  handleColorChange?: (color: string) => void;
+}) {
   const [selectedColor, setSelectedColor] = useState("#aabbcc");
+  const [open, setOpen] = useState(false);
   const defaultColor = "#aabbcc";
-
-  const handleColorChange = (color: string) => {
-    setSelectedColor(color);
-  };
 
   const handleReset = () => {
     setSelectedColor(defaultColor);
   };
 
   const handleSave = () => {
-    console.log("Cor selecionada:", selectedColor);
+    console.log(selectedColor);
+    if (handleColorChange) handleColorChange(selectedColor);
+    setOpen(false);
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={(v) => setOpen(v)}>
       <DialogTrigger asChild>
         <button className="mt-3 text-gray-600 text-sm w-max relative group">
-          Mostrar cores
+          Mostrar mais cores
           <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gray-400 transition-all group-hover:w-full"></span>
         </button>
       </DialogTrigger>
@@ -156,7 +170,7 @@ export function ColorPickerDialog() {
           Selecione uma cor abaixo para identificar sua categoria.
         </p>
         <div className="flex flex-col items-center gap-4">
-          <ColorPicker onChange={handleColorChange} />
+          <ColorPicker onChange={(val) => setSelectedColor(val)} />
         </div>
         <DialogFooter className="flex justify-between">
           <Button variant="outline" onClick={handleReset}>
@@ -186,20 +200,26 @@ export function SelectSubCategory() {
 export function SelectDemo() {
   return (
     <Select>
-      <SelectTrigger>
+      <SelectTrigger className="w-80 mt-2">
         <div className="flex gap-2 items-center">
-          <Circle size={25} />
-          <SelectValue placeholder="Select a fruit" />
+          <SelectValue className="w-80" placeholder="Select a fruit" />
         </div>
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Fruits</SelectLabel>
-          <SelectItem value="apple">Apple</SelectItem>
-          <SelectItem value="banana">Banana</SelectItem>
-          <SelectItem value="blueberry">Blueberry</SelectItem>
-          <SelectItem value="grapes">Grapes</SelectItem>
-          <SelectItem value="pineapple">Pineapple</SelectItem>
+          <SelectItem className="flex" value="apple">
+            <div className="flex items-center gap-2">
+              <Circle size={25} />
+              <span>Pineapple</span>
+            </div>
+          </SelectItem>
+          <SelectItem className="flex" value="banana">
+            <div className="flex items-center gap-2">
+              <Circle size={25} />
+              <span>Pineapple</span>
+            </div>
+          </SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>
