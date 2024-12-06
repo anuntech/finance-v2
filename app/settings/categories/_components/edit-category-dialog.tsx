@@ -27,26 +27,28 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export function EditCategoryDialog() {
+export function EditCategoryDialog({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: any;
+}) {
   const [isSubCategory, setIsSubCategory] = useState(false);
 
   const onOpenChange = (open: boolean) => {
     if (!open) {
       setIsSubCategory(false);
     }
+    setOpen(open);
   };
 
   return (
-    <Dialog onOpenChange={onOpenChange}>
-      <DialogTrigger asChild>
-        <Button className="text-xs ml-auto">
-          <Circle /> Adicionar
-        </Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>
-            Adicionar {isSubCategory ? "subcategoria" : "categoria"}
+            Editar {isSubCategory ? "subcategoria" : "categoria"}
           </DialogTitle>
           <DialogDescription>
             Make changes to your profile here. Click save when you're done.
