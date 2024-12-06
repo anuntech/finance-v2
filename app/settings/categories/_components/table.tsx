@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -14,6 +13,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import {
+  ArrowDown,
   ArrowRight,
   ArrowUp,
   ArrowUpDown,
@@ -47,6 +47,7 @@ import {
 import { cn } from "@/lib/utils";
 import { CategoryActions } from "./table-actions";
 import { AddCategoryDialog } from "./add-category-dialog";
+import { Fragment, useState } from "react";
 
 const data = [
   {
@@ -131,33 +132,25 @@ export const columns: ColumnDef<any>[] = [
     header: "Categoria",
     cell: ({ row }) => <div className="text-left">{row.getValue("name")}</div>,
   },
-  {
-    accessorKey: "actions",
-    header: () => <div className="text-right">Ações</div>,
-    cell: ({ row }) => {
-      return (
-        <div className="flex justify-end items-center font-medium gap-2">
-          <Button variant="ghost" size="icon">
-            <Circle className="size-5" color="blue" />
-          </Button>
-          <Button variant="ghost" size="icon">
-            <ArrowUp className="size-5" />
-          </Button>
-          <CategoryActions />
-        </div>
-      );
-    },
-  },
+  // {
+  //   accessorKey: "actions",
+  //   header: () => <div className="text-right">Ações</div>,
+  //   cell: ({ row }) => {
+  //     return (
+
+  //     );
+  //   },
+  // },
 ];
 
 export function DataTable() {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
+  const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>(
+    {}
   );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
     data,
@@ -177,6 +170,13 @@ export function DataTable() {
       rowSelection,
     },
   });
+
+  const toggleRowExpanded = (rowId: string) => {
+    setExpandedRows((prev) => ({
+      ...prev,
+      [rowId]: !prev[rowId],
+    }));
+  };
 
   return (
     <div>
@@ -220,7 +220,7 @@ export function DataTable() {
             <TableBody>
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
-                  <React.Fragment key={row.id}>
+                  <Fragment key={row.id}>
                     <TableRow data-state={row.getIsSelected() && "selected"}>
                       {row.getVisibleCells().map((cell) => (
                         <TableCell key={cell.id}>
@@ -230,41 +230,63 @@ export function DataTable() {
                           )}
                         </TableCell>
                       ))}
-                    </TableRow>
-
-                    {row.original.subCategories.map((sub: any) => (
-                      <TableRow key={sub.id} className="h-[54px]">
-                        <TableCell className="text-left text-sm text-muted-foreground w-[40px]">
-                          <ArrowRight className="size-5" />
-                        </TableCell>
-
-                        <TableCell
-                          style={{ width: "40px", padding: 0 }}
-                          className={"w-[40px] p-0 ml-4"}
-                        >
-                          <Checkbox
-                            checked={row.getIsSelected()}
-                            onCheckedChange={(value) =>
-                              row.toggleSelected(!!value)
-                            }
-                            aria-label="Select row"
-                            className="ml-3"
-                          />
-                        </TableCell>
-
-                        <TableCell
-                          colSpan={columns.length - 8}
-                          className="w-[400px] absolute left-[5.3rem] mt-[8px] text-left text-sm text-muted-foreground"
-                        >
-                          {sub.name}
-                        </TableCell>
-
-                        <div className="mt-[16px] right-2 absolute text-left text-sm">
+                      <TableCell className="text-right">
+                        <div className="flex justify-end items-center font-medium gap-2">
+                          <Button variant="ghost" size="icon">
+                            <Circle className="size-5" color="blue" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => toggleRowExpanded(row.id)}
+                            disabled={row.original.subCategories.length == 0}
+                          >
+                            {expandedRows[row.id] ? (
+                              <ArrowDown className="size-5" />
+                            ) : (
+                              <ArrowUp className="size-5" />
+                            )}
+                          </Button>
                           <CategoryActions />
                         </div>
-                      </TableRow>
-                    ))}
-                  </React.Fragment>
+                      </TableCell>
+                    </TableRow>
+
+                    {/* Renderização Condicional das Subcategorias */}
+                    {expandedRows[row.id] &&
+                      row.original.subCategories.map((sub: any) => (
+                        <TableRow key={sub.id} className="h-[54px]">
+                          <TableCell className="text-left text-sm text-muted-foreground w-[40px]">
+                            <ArrowRight className="size-5" />
+                          </TableCell>
+
+                          <TableCell
+                            style={{ width: "40px", padding: 0 }}
+                            className={"w-[40px] p-0 ml-4"}
+                          >
+                            <Checkbox
+                              checked={row.getIsSelected()}
+                              onCheckedChange={(value) =>
+                                row.toggleSelected(!!value)
+                              }
+                              aria-label="Select row"
+                              className="ml-3"
+                            />
+                          </TableCell>
+
+                          <TableCell
+                            colSpan={columns.length - 8}
+                            className="w-[400px] absolute left-[5.3rem] mt-[8px] text-left text-sm text-muted-foreground"
+                          >
+                            {sub.name}
+                          </TableCell>
+
+                          <div className="mt-[16px] right-2 absolute text-left text-sm">
+                            <CategoryActions />
+                          </div>
+                        </TableRow>
+                      ))}
+                  </Fragment>
                 ))
               ) : (
                 <TableRow>
