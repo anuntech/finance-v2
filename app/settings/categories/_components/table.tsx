@@ -149,9 +149,6 @@ export function DataTable() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
-  const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>(
-    {}
-  );
 
   const table = useReactTable({
     data,
@@ -173,13 +170,6 @@ export function DataTable() {
       rowSelection,
     },
   });
-
-  const toggleRowExpanded = (rowId: string) => {
-    setExpandedRows((prev) => ({
-      ...prev,
-      [rowId]: !prev[rowId],
-    }));
-  };
 
   return (
     <div>
