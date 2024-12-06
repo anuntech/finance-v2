@@ -46,7 +46,7 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { CategoryActions } from "./table-actions";
-import { AddCategoryDialog } from "./add-category-dialog";
+import { AddDialog } from "./add-dialog";
 import { Fragment, useState } from "react";
 
 const data = [
@@ -190,7 +190,7 @@ export function DataTable() {
             }
             className="max-w-sm"
           />
-          <AddCategoryDialog />
+          <AddDialog />
         </div>
         <div className="rounded-md border">
           <Table className="table-fixed">

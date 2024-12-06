@@ -46,7 +46,7 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { CategoryActions } from "./table-actions";
-import { AddCategoryDialog } from "./add-category-dialog";
+import { AddDialog } from "./add-dialog";
 import { Fragment, useState } from "react";
 
 const data = [
@@ -55,7 +55,7 @@ const data = [
     name: "Anuntech",
     color: "#000",
     type: "output",
-    subCategories: [
+    subItems: [
       {
         id: "m5gr8421",
         name: "Anuntech",
@@ -71,7 +71,7 @@ const data = [
     name: "Anuntech",
     color: "#000",
     type: "output",
-    subCategories: [
+    subItems: [
       {
         id: "m5gr8421",
         name: "Anuntech",
@@ -83,7 +83,7 @@ const data = [
     name: "Anuntech",
     color: "#000",
     type: "output",
-    subCategories: [
+    subItems: [
       {
         id: "m5gr8421",
         name: "Anuntech",
@@ -95,14 +95,14 @@ const data = [
     name: "Anuntech",
     color: "#000",
     type: "output",
-    subCategories: [],
+    subItems: [],
   },
   {
     id: "bhqecj4p",
     name: "Anuntech",
     color: "#000",
     type: "output",
-    subCategories: [],
+    subItems: [],
   },
 ];
 
@@ -129,7 +129,7 @@ export const columns: ColumnDef<any>[] = [
   },
   {
     accessorKey: "name",
-    header: "Categoria",
+    header: "Centro de custos",
     cell: ({ row }) => <div className="text-left">{row.getValue("name")}</div>,
   },
   // {
@@ -190,7 +190,7 @@ export function DataTable() {
             }
             className="max-w-sm"
           />
-          <AddCategoryDialog />
+          <AddDialog />
         </div>
         <div className="rounded-md border">
           <Table className="table-fixed">
@@ -239,7 +239,7 @@ export function DataTable() {
                             variant="ghost"
                             size="icon"
                             onClick={() => toggleRowExpanded(row.id)}
-                            disabled={row.original.subCategories.length == 0}
+                            disabled={row.original.subItems.length == 0}
                           >
                             {expandedRows[row.id] ? (
                               <ArrowDown className="size-5" />
@@ -253,7 +253,7 @@ export function DataTable() {
                     </TableRow>
 
                     {expandedRows[row.id] &&
-                      row.original.subCategories.map((sub: any) => (
+                      row.original.subItems.map((sub: any) => (
                         <TableRow key={sub.id} className="h-[54px]">
                           <TableCell className="text-left text-sm text-muted-foreground w-[40px]">
                             <ArrowRight className="size-5" />
