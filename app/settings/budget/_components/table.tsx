@@ -7,6 +7,7 @@ import {
   VisibilityState,
   flexRender,
   getCoreRowModel,
+  getExpandedRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
@@ -155,6 +156,8 @@ export function DataTable() {
   const table = useReactTable({
     data,
     columns,
+    getSubRows: (row) => row.subItems,
+    getExpandedRowModel: getExpandedRowModel(),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -219,74 +222,80 @@ export function DataTable() {
             </TableHeader>
             <TableBody>
               {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <Fragment key={row.id}>
-                    <TableRow data-state={row.getIsSelected() && "selected"}>
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
-                      <TableCell className="text-right">
-                        <div className="flex justify-end items-center font-medium gap-2">
-                          <Button variant="ghost" size="icon">
-                            <Circle className="size-5" color="blue" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => toggleRowExpanded(row.id)}
-                            disabled={row.original.subItems.length == 0}
-                          >
-                            {expandedRows[row.id] ? (
-                              <ArrowDown className="size-5" />
-                            ) : (
-                              <ArrowUp className="size-5" />
+                table.getRowModel().rows.map((row) => {
+                  // if row.depth > 0, is subcategory
+                  if (row.depth === 0) {
+                    return (
+                      <tr
+                        key={row.id}
+                        data-state={row.getIsSelected() && "selected"}
+                        className="data-[state=selected]:bg-muted h-[54px]"
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
                             )}
-                          </Button>
-                          <CategoryActions />
-                        </div>
-                      </TableCell>
-                    </TableRow>
-
-                    {expandedRows[row.id] &&
-                      row.original.subItems.map((sub: any) => (
-                        <TableRow key={sub.id} className="h-[54px]">
-                          <TableCell className="text-left text-sm text-muted-foreground w-[40px]">
-                            <ArrowRight className="size-5" />
                           </TableCell>
-
-                          <TableCell
-                            style={{ width: "40px", padding: 0 }}
-                            className={"w-[40px] p-0 ml-4"}
-                          >
-                            <Checkbox
-                              checked={row.getIsSelected()}
-                              onCheckedChange={(value) =>
-                                row.toggleSelected(!!value)
-                              }
-                              aria-label="Select row"
-                              className="ml-3"
-                            />
-                          </TableCell>
-
-                          <TableCell
-                            colSpan={columns.length - 8}
-                            className="w-[400px] absolute left-[5.3rem] mt-[8px] text-left text-sm text-muted-foreground"
-                          >
-                            {sub.name}
-                          </TableCell>
-
-                          <div className="mt-[10px] right-2 absolute text-left text-sm">
+                        ))}
+                        <TableCell className="text-right">
+                          <div className="flex justify-end items-center font-medium gap-2">
+                            <Button variant="ghost" size="icon">
+                              <Circle className="size-5" color="blue" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={row.getToggleExpandedHandler()}
+                              disabled={!row.getCanExpand()}
+                            >
+                              {row.getIsExpanded() ? (
+                                <ArrowDown className="size-5" />
+                              ) : (
+                                <ArrowUp className="size-5" />
+                              )}
+                            </Button>
                             <CategoryActions />
                           </div>
-                        </TableRow>
-                      ))}
-                  </Fragment>
-                ))
+                        </TableCell>
+                      </tr>
+                    );
+                  } else {
+                    return (
+                      <TableRow key={row.id} className="h-[54px]">
+                        <TableCell className="text-left text-sm text-muted-foreground w-[40px]">
+                          <ArrowRight className="size-5" />
+                        </TableCell>
+
+                        <TableCell
+                          style={{ width: "40px", padding: 0 }}
+                          className={"w-[40px] p-0 ml-4"}
+                        >
+                          <Checkbox
+                            checked={row.getIsSelected()}
+                            onCheckedChange={(value) =>
+                              row.toggleSelected(!!value)
+                            }
+                            aria-label="Select row"
+                            className="ml-3"
+                          />
+                        </TableCell>
+
+                        <TableCell
+                          colSpan={columns.length - 8}
+                          className="w-[400px] absolute left-[5.3rem] mt-[8px] text-left text-sm text-muted-foreground"
+                        >
+                          {row.original.name}
+                        </TableCell>
+
+                        <div className="mt-[8px] right-2 absolute text-left text-sm">
+                          <CategoryActions />
+                        </div>
+                      </TableRow>
+                    );
+                  }
+                })
               ) : (
                 <TableRow>
                   <TableCell
