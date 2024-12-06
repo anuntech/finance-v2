@@ -252,7 +252,6 @@ export function DataTable() {
                       </TableCell>
                     </TableRow>
 
-                    {/* Renderização Condicional das Subcategorias */}
                     {expandedRows[row.id] &&
                       row.original.subCategories.map((sub: any) => (
                         <TableRow key={sub.id} className="h-[54px]">
