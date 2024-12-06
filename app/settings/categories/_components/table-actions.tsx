@@ -11,9 +11,11 @@ import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { DeleteCategory } from "./delete-category";
 import { Button } from "@/components/ui/button";
+import { EditCategoryDialog } from "./edit-category-dialog";
 
 export function CategoryActions() {
-  const [open, setOpen] = useState(false);
+  const [openCategory, setOpenCategory] = useState(false);
+  const [openEditCategory, setOpenEditCategory] = useState(false);
 
   return (
     <>
@@ -24,18 +26,22 @@ export function CategoryActions() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => setOpenEditCategory(true)}>
             <Pencil className="mr-2 size-4" />
             Editar
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onSelect={() => setOpen(true)}>
+          <DropdownMenuItem onSelect={() => setOpenCategory(true)}>
             <Trash2 className="mr-2 size-4" />
             Deletar
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <DeleteCategory open={open} setOpen={setOpen} />
+      <DeleteCategory open={openCategory} setOpen={setOpenCategory} />
+      <EditCategoryDialog
+        open={openEditCategory}
+        setOpen={setOpenEditCategory}
+      />
     </>
   );
 }
