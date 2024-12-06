@@ -109,16 +109,16 @@ export function SelectColorToCategory({
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="text-sm text-muted-foreground">
-        Cor para identificação em relatórios
-      </div>
+      <div className="text-sm text-muted-foreground">Cor selecionada:</div>
       <div
-        className="w-16 h-16 rounded-full border-4 border-gray-300"
+        className="w-16 h-16 rounded-full border-4 border-gray-300 transition-all duration-300"
         style={{
           backgroundColor: selectedColor,
           boxShadow: `0 0 10px 2px ${selectedColor}`,
+          animation: selectedColor ? "border-glow 1s ease-out" : "",
         }}
       ></div>
+
       <div className="flex gap-2">
         {colors.map((color) => (
           <button
