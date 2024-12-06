@@ -46,7 +46,7 @@ export function AddDialog() {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>
-            Adicionar {isSubCategory ? "subetiqueta" : "categoria"}
+            Adicionar {isSubCategory ? "subetiqueta" : "etiqueta"}
           </DialogTitle>
           <DialogDescription>
             Make changes to your profile here. Click save when you're done.
@@ -55,10 +55,10 @@ export function AddDialog() {
         <div className="flex flex-col gap-4">
           <div>
             <Label htmlFor="name">
-              Nome da {isSubCategory ? "subetiqueta" : "categoria"}
+              Nome da {isSubCategory ? "subetiqueta" : "etiqueta"}
               <span className="text-red-500">*</span>
             </Label>
-            <Input id="name" placeholder="Nome da categoria" className="w-80" />
+            <Input id="name" placeholder="Nome da etiqueta" className="w-80" />
           </div>
           <div className="flex items-center space-x-2">
             <Switch
@@ -167,7 +167,7 @@ export function ColorPickerDialog({
       <DialogContent className="sm:max-w-[425px]">
         <h2 className="text-lg font-bold">Escolha uma cor</h2>
         <p className="text-sm text-gray-600">
-          Selecione uma cor abaixo para identificar sua categoria.
+          Selecione uma cor abaixo para identificar sua etiqueta.
         </p>
         <div className="flex flex-col items-center gap-4">
           <ColorPicker onChange={(val) => setSelectedColor(val)} />
@@ -189,7 +189,7 @@ export function SelectSubCategory() {
   return (
     <div>
       <Label htmlFor="name">
-        Categoria principal
+        Etiqueta principal
         <span className="text-red-500">*</span>
       </Label>
       <SelectDemo />
@@ -202,12 +202,12 @@ export function SelectDemo() {
     <Select>
       <SelectTrigger className="w-80 mt-2">
         <div className="flex gap-2 items-center">
-          <SelectValue className="w-80" placeholder="Selecione uma categoria" />
+          <SelectValue className="w-80" placeholder="Selecione uma etiqueta" />
         </div>
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Categorias</SelectLabel>
+          <SelectLabel>Etiqueta</SelectLabel>
           <SelectItem className="flex" value="apple">
             <div className="flex items-center gap-2">
               <Circle size={25} />

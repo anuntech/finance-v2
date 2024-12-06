@@ -129,7 +129,7 @@ export const columns: ColumnDef<any>[] = [
   },
   {
     accessorKey: "name",
-    header: "Categoria",
+    header: "Etiqueta",
     cell: ({ row }) => <div className="text-left">{row.getValue("name")}</div>,
   },
   // {
