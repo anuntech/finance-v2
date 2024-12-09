@@ -43,8 +43,9 @@
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cmdk": "^1.0.0",
     "crisp-sdk-web": "^1.0.22",
-    "date-fns": "^4.1.0",
+    "date-fns": "^2.30.0",
     "embla-carousel-react": "^8.2.1",
     "emoji-mart": "^5.6.0",
     "eslint": "8.47.0",
@@ -67,6 +68,7 @@
     "nodemailer": "^6.9.16",
     "react": "18.2.0",
     "react-colorful": "^5.6.1",
+    "react-day-picker": "^8.10.1",
     "react-dom": "18.2.0",
     "react-easy-crop": "^5.1.0",
     "react-hook-form": "^7.53.2",
@@ -79,6 +81,7 @@
     "stripe": "^13.11.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
+    "vaul": "^1.1.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
