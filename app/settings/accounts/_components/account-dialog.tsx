@@ -24,12 +24,20 @@ export function AccountDialog({
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
-    <Dialog open={isOpen} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className="text-xs ml-auto">
-          <Circle /> Adicionar
-        </Button>
-      </DialogTrigger>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(v) => {
+        setOpen(v);
+        setTimeout(() => (document.body.style.pointerEvents = ""), 500);
+      }}
+    >
+      {!isEdit && (
+        <DialogTrigger asChild>
+          <Button className="text-xs ml-auto">
+            <Circle /> Adicionar
+          </Button>
+        </DialogTrigger>
+      )}
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>{isEdit ? "Editar" : "Adicionar"} banco</DialogTitle>

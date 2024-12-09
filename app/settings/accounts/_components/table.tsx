@@ -131,26 +131,35 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const payment = row.original;
+      const [isOpen, setIsOpen] = React.useState(false);
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger className="flex font-bold w-1 text-xl text-center items-center justify-center">
-            <Button variant="ghost" size="icon">
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>
-              <Pencil className="mr-2 size-4" />
-              Editar
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Trash2 className="mr-2 size-4" />
-              Deletar
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex font-bold w-1 text-xl text-center items-center justify-center">
+              <Button variant="ghost" size="icon">
+                <MoreHorizontal />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={() => setIsOpen(true)}>
+                <Pencil className="mr-2 size-4" />
+                Editar
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => setIsOpen(true)}>
+                <Trash2 className="mr-2 size-4" />
+                Deletar
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <AccountDialog
+            accountId={payment.id}
+            isOpen={isOpen}
+            setOpen={setIsOpen}
+            isEdit
+          />
+        </>
       );
     },
   },
