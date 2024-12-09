@@ -12,9 +12,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Circle } from "lucide-react";
 
-export function AccountDialog() {
+export function AccountDialog({
+  isEdit,
+  accountId,
+  isOpen,
+  setOpen,
+}: {
+  isEdit?: boolean;
+  accountId?: string;
+  isOpen?: boolean;
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="text-xs ml-auto">
           <Circle /> Adicionar
@@ -22,7 +32,7 @@ export function AccountDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Adicionar banco</DialogTitle>
+          <DialogTitle>{isEdit ? "Editar" : "Adicionar"} banco</DialogTitle>
           <DialogDescription>
             Make changes to your profile here. Click save when you're done.
           </DialogDescription>
@@ -42,7 +52,9 @@ export function AccountDialog() {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Salvar</Button>
+          <Button type="submit">
+            {isEdit ? "Salvar alterações" : "Salvar"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
