@@ -42,6 +42,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AccountDialog } from "./account-dialog";
+import { Delete } from "./delete";
 
 const data: Payment[] = [
   {
@@ -131,7 +132,8 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const payment = row.original;
-      const [isOpen, setIsOpen] = React.useState(false);
+      const [isEditOpen, setIsEditOpen] = React.useState(false);
+      const [isDeleteOpen, setIsDeleteOpen] = React.useState(false);
 
       return (
         <>
@@ -142,12 +144,12 @@ export const columns: ColumnDef<Payment>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem onClick={() => setIsOpen(true)}>
+              <DropdownMenuItem onClick={() => setIsEditOpen(true)}>
                 <Pencil className="mr-2 size-4" />
                 Editar
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => setIsOpen(true)}>
+              <DropdownMenuItem onClick={() => setIsDeleteOpen(true)}>
                 <Trash2 className="mr-2 size-4" />
                 Deletar
               </DropdownMenuItem>
@@ -155,10 +157,11 @@ export const columns: ColumnDef<Payment>[] = [
           </DropdownMenu>
           <AccountDialog
             accountId={payment.id}
-            isOpen={isOpen}
-            setOpen={setIsOpen}
+            isOpen={isEditOpen}
+            setOpen={setIsEditOpen}
             isEdit
           />
+          <Delete open={isDeleteOpen} setOpen={setIsDeleteOpen} />
         </>
       );
     },
