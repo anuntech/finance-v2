@@ -169,6 +169,12 @@ export const columns: ColumnDef<Payment>[] = [
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          <CardsDialog
+            isEdit
+            accountId={row.original.id}
+            isOpen={isEditOpen}
+            setOpen={setIsEditOpen}
+          />
         </>
       );
     },
