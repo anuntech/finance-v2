@@ -43,6 +43,7 @@ import {
 } from "@/components/ui/table";
 import { AccountDialog } from "../../accounts/_components/account-dialog";
 import { CardsDialog } from "./cards-dialog";
+import { Delete } from "../../accounts/_components/delete";
 
 const data = [
   {
@@ -175,6 +176,7 @@ export const columns: ColumnDef<Payment>[] = [
             isOpen={isEditOpen}
             setOpen={setIsEditOpen}
           />
+          <Delete open={isDeleteOpen} setOpen={setIsDeleteOpen} />
         </>
       );
     },
