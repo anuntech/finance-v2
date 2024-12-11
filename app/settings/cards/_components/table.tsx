@@ -41,37 +41,42 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { AccountDialog } from "./account-dialog";
-import { Delete } from "./delete";
+import { AccountDialog } from "../../accounts/_components/account-dialog";
+import { CardsDialog } from "./cards-dialog";
 
 const data = [
   {
     id: "m5gr84i9",
-    amount: 316,
+    openInvoice: 299,
+    limit: 316,
     name: "Banco inter",
   },
   {
     id: "3u1reuv4",
-    amount: 242,
+    openInvoice: 299,
+    limit: 242,
     name: "Santander",
   },
   {
     id: "derv1ws0",
-    amount: 837,
+    openInvoice: 299,
+    limit: 837,
     status: "processing",
     name: "Banco do Brasil",
   },
   {
     id: "5kma53ae",
-    amount: 874,
+    openInvoice: 299,
+    limit: 874,
     name: "C6 Bank",
   },
 ];
 
 export type Payment = {
   id: string;
-  amount: number;
+  limit: number;
   name: string;
+  openInvoice: number;
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -109,15 +114,29 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => <div className="lowercase">{row.getValue("name")}</div>,
   },
   {
-    accessorKey: "amount",
+    accessorKey: "openInvoice",
     header: () => <div className="text-right">Saldo</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
+      const openInvoice = parseFloat(row.getValue("openInvoice"));
 
       const formatted = new Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL",
-      }).format(amount);
+      }).format(openInvoice);
+
+      return <div className="text-right font-medium">{formatted}</div>;
+    },
+  },
+  {
+    accessorKey: "limit",
+    header: () => <div className="text-right">Saldo</div>,
+    cell: ({ row }) => {
+      const limit = parseFloat(row.getValue("limit"));
+
+      const formatted = new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(limit);
 
       return <div className="text-right font-medium">{formatted}</div>;
     },
@@ -150,20 +169,13 @@ export const columns: ColumnDef<Payment>[] = [
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <AccountDialog
-            accountId={payment.id}
-            isOpen={isEditOpen}
-            setOpen={setIsEditOpen}
-            isEdit
-          />
-          <Delete open={isDeleteOpen} setOpen={setIsDeleteOpen} />
         </>
       );
     },
   },
 ];
 
-export function AccountsTable() {
+export function CardsTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -206,7 +218,7 @@ export function AccountsTable() {
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <AccountDialog isOpen={isOpen} setOpen={setOpen} />
+            <CardsDialog isOpen={isOpen} setOpen={setOpen} />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {table
