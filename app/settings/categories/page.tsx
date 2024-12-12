@@ -1,5 +1,10 @@
+"use client";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DataTable } from "./_components/table";
+import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "@/components/ui/skeleton";
+import { api } from "@/libs/api";
 
 const data = [
   {
@@ -59,6 +64,11 @@ const data = [
 ];
 
 export default function Categories() {
+  const categoriesQuery = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => api.get("/api/settings/category"),
+  });
+
   return (
     <div className="px-6 pt-6">
       <h1 className="text-1xl font-bold mb-2">Categorias</h1>
@@ -75,13 +85,13 @@ export default function Categories() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="saidas">
-          <DataTable data={data} />
+          {categoriesQuery.isPending ? <Skeleton /> : <DataTable data={data} />}
         </TabsContent>
         <TabsContent value="outros">
-          <DataTable data={data} />
+          {categoriesQuery.isPending ? <Skeleton /> : <DataTable data={data} />}
         </TabsContent>
         <TabsContent value="entradas">
-          <DataTable data={data} />
+          {categoriesQuery.isPending ? <Skeleton /> : <DataTable data={data} />}
         </TabsContent>
       </Tabs>
     </div>

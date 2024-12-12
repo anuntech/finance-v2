@@ -126,7 +126,7 @@ export function DataTable({ data }: { data: any[] }) {
             }
             className="max-w-sm"
           />
-          <AddCategoryDialog />
+          <AddCategoryDialog type="output" />
         </div>
         <div className="rounded-md border">
           <Table className="table-fixed">
@@ -154,8 +154,8 @@ export function DataTable({ data }: { data: any[] }) {
               ))}
             </TableHeader>
             <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => {
+              {table?.getRowModel().rows?.length ? (
+                table?.getRowModel().rows.map((row) => {
                   // if row.depth > 0, is subcategory
                   if (row.depth === 0) {
                     return (

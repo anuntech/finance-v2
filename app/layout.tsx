@@ -7,6 +7,7 @@ import ClientLayout from "@/components/LayoutClient";
 import { getSEOTags } from "@/libs/seo";
 import { MakeQueryClientProvider } from "@/libs/query-client";
 import { Toaster } from "@/components/ui/toaster";
+import { useQuery } from "@tanstack/react-query"; // <-- Ensure this is properly imported
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,7 +33,6 @@ export default function RootLayout({
         </head>
       )}
       <body className={cn("font-medium antialiased", inter.className)}>
-        {/* ClientLayout contains all the client wrappers (Crisp chat support, toast messages, tooltips, etc.) */}
         <ClientLayout>
           <MakeQueryClientProvider>{children}</MakeQueryClientProvider>
           <Toaster />

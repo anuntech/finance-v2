@@ -26,15 +26,39 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useMutation } from "@tanstack/react-query";
+import { api } from "@/libs/api";
 
-export function AddCategoryDialog() {
+export function AddCategoryDialog({
+  type,
+}: {
+  type: "input" | "output" | "others";
+}) {
   const [isSubCategory, setIsSubCategory] = useState(false);
+
+  const createCategoryMutation = useMutation({
+    mutationFn: async (data: any) => api.post("/api/settings/category", data),
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
 
   const onOpenChange = (open: boolean) => {
     if (!open) {
       setIsSubCategory(false);
     }
   };
+
+  const handleCreateCategory = async () => {
+    createCategoryMutation.mutate({
+      name,
+      color,
+      type: isSubCategory ? "output" : "input",
+    });
+  };
+
+  const [name, setName] = useState("");
+  const [color, setColor] = useState("");
 
   return (
     <Dialog onOpenChange={onOpenChange}>
@@ -67,7 +91,7 @@ export function AddCategoryDialog() {
             />
             <Label htmlFor="is-sub-category">É uma subcategoria</Label>
           </div>
-          {!isSubCategory && <SelectColorToCategory />}
+          {!isSubCategory && <SelectColorToCategory onChange={setColor} />}
           {isSubCategory && <SelectSubCategory />}
         </div>
 
