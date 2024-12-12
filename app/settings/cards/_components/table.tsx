@@ -116,7 +116,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "openInvoice",
-    header: () => <div className="text-right">Saldo</div>,
+    header: () => <div className="text-right">Fatura em aberto</div>,
     cell: ({ row }) => {
       const openInvoice = parseFloat(row.getValue("openInvoice"));
 
@@ -130,7 +130,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "limit",
-    header: () => <div className="text-right">Saldo</div>,
+    header: () => <div className="text-right">Limite disponível</div>,
     cell: ({ row }) => {
       const limit = parseFloat(row.getValue("limit"));
 
