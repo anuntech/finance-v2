@@ -50,63 +50,6 @@ import { CategoryActions } from "./table-actions";
 import { AddCategoryDialog } from "./add-category-dialog";
 import { Fragment, useState } from "react";
 
-const data = [
-  {
-    id: "m5gr84i9",
-    name: "Anuntech",
-    color: "#000",
-    type: "output",
-    subCategories: [
-      {
-        id: "m5gr8421",
-        name: "Anuntech",
-      },
-      {
-        id: "m5gr8426",
-        name: "Anuntech sub",
-      },
-    ],
-  },
-  {
-    id: "3u1reuv4",
-    name: "Anuntech",
-    color: "#000",
-    type: "output",
-    subCategories: [
-      {
-        id: "m5gr8421",
-        name: "Anuntech",
-      },
-    ],
-  },
-  {
-    id: "derv1ws0",
-    name: "Anuntech",
-    color: "#000",
-    type: "output",
-    subCategories: [
-      {
-        id: "m5gr8421",
-        name: "Anuntech",
-      },
-    ],
-  },
-  {
-    id: "5kma53ae",
-    name: "Anuntech",
-    color: "#000",
-    type: "output",
-    subCategories: [],
-  },
-  {
-    id: "bhqecj4p",
-    name: "Anuntech",
-    color: "#000",
-    type: "output",
-    subCategories: [],
-  },
-];
-
 export const columns: ColumnDef<any>[] = [
   {
     id: "select",
@@ -144,7 +87,7 @@ export const columns: ColumnDef<any>[] = [
   // },
 ];
 
-export function DataTable() {
+export function DataTable({ data }: { data: any[] }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});

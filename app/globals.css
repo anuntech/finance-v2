@@ -137,3 +137,6 @@ main::-webkit-scrollbar-thumb {
   display: none; /* Remove o spinner (opcional) */
 }
 
+tr {
+  @apply border-b border-border;
+}
