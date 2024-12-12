@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import toJSON from "./plugins/toJSON";
 import { Model } from "mongoose";
 
-export interface IWorkspace extends Document {
+export interface ICategory extends Document {
   id: mongoose.Schema.Types.ObjectId;
   name: string;
   color: string;
@@ -12,7 +12,7 @@ export interface IWorkspace extends Document {
   }[];
 }
 
-const workspaceSchema = new mongoose.Schema<IWorkspace>(
+const categorySchema = new mongoose.Schema<ICategory>(
   {
     name: { type: String, trim: true, required: true, maxlength: 50 },
     color: {
@@ -38,10 +38,10 @@ const workspaceSchema = new mongoose.Schema<IWorkspace>(
   }
 );
 
-workspaceSchema.plugin(toJSON as any);
+categorySchema.plugin(toJSON as any);
 
-const Workspace: Model<IWorkspace> =
-  mongoose.models.Workspace ||
-  mongoose.model<IWorkspace>("Workspace", workspaceSchema);
+const Category: Model<ICategory> =
+  mongoose.models.Category ||
+  mongoose.model<ICategory>("Category", categorySchema);
 
-export default Workspace;
+export default Category;
